@@ -1,0 +1,28 @@
+# vim: set syn=python ts=4 sw=4 sts=4 et ai:
+import os, pwd
+_OSUSER = pwd.getpwuid(os.getuid())[0]
+
+# Debugging
+DEBUG = TEMPLATE_DEBUG = True
+
+# DB settings
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'epistola_%s' % _OSUSER,
+        'USER': '%s' % _OSUSER,
+        'PASSWORD': '%s2' % _OSUSER,
+        'HOST': '',
+        'PORT': '',
+    }
+}
+
+# Email settings
+ADMINS = MANAGERS = (('example', 'example@example.com',))
+
+# Django debug toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}

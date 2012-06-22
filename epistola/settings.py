@@ -12,14 +12,14 @@ USE_L10N = True
 USE_TZ = True
 
 #Media
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media'),
+MEDIA_ROOT = os.path.join(ROOT_DIR, 'media'),
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/srv/www/tickettracker/htdocs/static/'
 STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(ROOT_DIR, 'static'),
 )
 
 STATICFILES_FINDERS = (
@@ -42,7 +42,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,8 +68,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-
-    'debug_toolbar'
 )
 
 # A sample logging configuration. The only tangible logging

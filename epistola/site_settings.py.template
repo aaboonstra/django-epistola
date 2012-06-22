@@ -26,3 +26,6 @@ INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
+
+# See also: http://stackoverflow.com/questions/3305328/ignore-default-content-type-for-the-django-admin-site
+DEFAULT_CONTENT_TYPE = 'application/xhtml+xml'

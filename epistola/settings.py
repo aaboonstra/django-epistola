@@ -4,7 +4,7 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(PROJECT_DIR)
 
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Amsterdam'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
@@ -14,7 +14,7 @@ USE_TZ = True
 #Media
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media'),
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/srv/www/tickettracker/htdocs/static/'
+STATIC_ROOT = '/srv/www/epistola/htdocs/static/'
 STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 

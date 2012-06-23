@@ -27,5 +27,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
+MAIL_SERVER = 'your_mail_server'
+
 # See also: http://stackoverflow.com/questions/3305328/ignore-default-content-type-for-the-django-admin-site
 DEFAULT_CONTENT_TYPE = 'application/xhtml+xml'

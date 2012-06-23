@@ -12,7 +12,9 @@
   </head>
   <body>
     <!-- menu -->
-    {% include "menu.html" %}
+    {% if user.is_authenticated %}
+      {% include "menu.html" %}
+    {% endif %}
 
     <!-- main content -->
     {% block page_content %}

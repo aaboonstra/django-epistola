@@ -1,0 +1,90 @@
+{# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block extra_head %}
+<style type="text/css">
+  /* Override some defaults */
+  html, body {
+    background-color: #eee;
+  }
+  body {
+    padding-top: 40px; 
+  }
+  .container {
+    width: 600px;
+  }
+
+  /* The white background content wrapper */
+  .container > .content {
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 -20px; 
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+
+  .login-form {
+    margin-left: 65px;
+  }
+
+  legend {
+    margin-right: -50px;
+    font-weight: bold;
+    color: #404040;
+  }
+
+  form label {
+    padding-right: 20px;
+  }
+
+</style>
+
+
+{% endblock extra_head %}
+
+{% block page_content %}
+
+<div class="container">
+  <div class="content">
+    <div class="row">
+      <div class="login-form">
+        <h2>Login</h2>
+        <form action="{% url login %}" method="post" class="form-horizontal">
+          {% csrf_token %}
+          {% if form.errors and not form.non_field_errors %}
+          <div class="form-error">
+            {% blocktrans count form.errors.items|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+          </div>
+          {% endif %}
+          {% if form.non_field_errors %}
+          <div class="error">
+            {{ form.non_field_errors }}
+          </div>
+          {% endif %}
+          <fieldset>
+            {% for field in form %}
+            {% if field.errors %}
+              <div class="control-group error">
+            {% else %}
+              <div class="control-group">
+            {% endif %}
+              <label class="control-label" for="focusedInput">{{ field.label }}</label>
+              {{ field }}
+              {% for error in field.errors %}
+                <span class="help-inline">{{ error }}</span>
+              {% endfor %}
+              </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary" value="{% trans 'Sign in' %}"/>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock page_content %}

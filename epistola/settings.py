@@ -70,6 +70,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'epistola.backends.ImapAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend', # used to get into the admin interface for now
+)
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

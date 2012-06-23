@@ -28,6 +28,7 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 MAIL_SERVER = 'your_mail_server'
+USE_SSL = True
 
 # See also: http://stackoverflow.com/questions/3305328/ignore-default-content-type-for-the-django-admin-site
 DEFAULT_CONTENT_TYPE = 'application/xhtml+xml'

@@ -1,3 +1,4 @@
+# vim: set syn=python ts=4 sw=4 sts=4 et ai:
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin

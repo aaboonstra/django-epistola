@@ -1,3 +1,4 @@
+# vim: set syn=python ts=4 sw=4 sts=4 et ai:
 # Based on http://www.djangorocks.com/tutorials/creating-a-custom-authentication-backend/creating-the-imap-authentication-backend.html
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -10,7 +11,7 @@ class ImapAuthenticationBackend(object):
     def authenticate(self, username=None, password=None):
         try:
             # Check if this user is valid on the mail server
-            c = IMAPClient(settings.MAIL_SERVER, use_uid=True, ssl=True)
+            c = IMAPClient(settings.MAIL_SERVER, use_uid=True, ssl=settings.USE_SSL)
             c.login(username, password)
             c.logout()
         except:

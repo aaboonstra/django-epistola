@@ -30,5 +30,12 @@ DEBUG_TOOLBAR_CONFIG = {
 MAIL_SERVER = 'your_mail_server'
 USE_SSL = True
 
+# mimetype whitelist for attachments
+ATTACHMENT_ALLOWED_MIMETYPES = (
+    'text/plain',
+)
+
+BLOCKED_MIMETYPES = ()
+
 # See also: http://stackoverflow.com/questions/3305328/ignore-default-content-type-for-the-django-admin-site
 DEFAULT_CONTENT_TYPE = 'application/xhtml+xml'

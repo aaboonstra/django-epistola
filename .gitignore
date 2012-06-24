@@ -2,4 +2,4 @@
 *.swp
 site_settings.py
 site_settings.pyc
-tools*
+media*

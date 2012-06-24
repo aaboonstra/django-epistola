@@ -1,0 +1,136 @@
+{# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}
+{% load i18n attachment_tags %}
+
+<form method="post" class="form-horizontal" id="send_mail_form">{% csrf_token %}
+  <div class="mail-container">
+    <!-- mail from-->
+    <div class="control-group">
+      <label class="control-label" for="mail_from">{% trans "From" %}:</label>
+      <div class="controls">
+        <select id="mail_from">
+          <option>example@example.com</option>
+        </select>
+      </div>
+    </div>
+    {% for field in form %}
+      {% if not field.name == "mail_body" %}
+      <div class="control-group control-group-{{ field.name }}{% if field.errors %} error{% endif %}">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">
+          {{ field }}
+          {% for error in field.errors %}
+            <span class="help-inline">{{ error }}</span>
+          {% endfor %}
+          {% if field.name == "mail_to" %}
+            <br/>
+            <a href="javascript:;" id="add_cc">{% trans "Add cc" %}</a>
+            <a href="javascript:;" id="add_bcc">{% trans "Add bcc" %}</a>
+          {% endif %}
+        </div> 
+      </div>
+      {% endif %}
+    {% endfor %}
+    <div class="control-group">
+      <div class="controls">
+        <br/>
+        <ul id="attachment_upload_list" class="qq-upload-list"></ul>
+        <div id='add_new_attachment'></div>
+      </div>
+    </div>
+  </div>
+  <div class="message-container">
+    <div class="control-group {% if form.mail_body.errors %}error{% endif %}">
+      {% for error in form.mail_body.errors %}
+        <span class="help-inline">{{ error }}</span>
+      {% endfor %}
+      {{ form.mail_body }}
+    </div>
+  </div>
+</form>
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/fileuploader.css"/>
+<script src="{{ STATIC_URL }}js/fileuploader/fileuploader.js"></script>
+<script type="text/javascript">//<![CDATA[
+  $(document).ready(function() {
+    var uploader = new qq.FileUploader({
+      debug: true,
+      element: document.getElementById('add_new_attachment'),
+      button: $('#uploadbutton')[0],
+      multiple: true,
+      name: 'f',
+      action: '{% url attachment:create user.id %}', // add action XXX
+      acceptFiles: '{% get_allowed_attachment_mimetypes %}',
+      onXhrInit: function (xhr) {
+        xhr.setRequestHeader('X-CSRFToken', '{{ request.META.CSRF_COOKIE }}');
+      },
+      onFormInit: function (form) {
+        form.appendChild("{% csrf_token %}");
+      },
+      template: '<div style="display: none;" class="qq-upload-drop-area"></div>' + 
+                '<a class="qq-upload-button ui_button ui_button_light" ' +
+                'rel="add_attachment" href="javascript:;"><i class="icon-plus"/>' + 
+                '{% trans "Add attachment" %}</a>',
+      fileTemplate: '<li>' +
+            '<span class="qq-upload-file"></span>' +
+            '<span class="qq-upload-spinner"></span>' +
+            '<span class="qq-upload-size"></span>' +
+            '<a class="qq-upload-cancel" href="#">Cancel</a>' +
+            '<span class="qq-upload-message">Uploading</span>' +
+        '</li>',
+      listElement: document.getElementById('attachment_upload_list'),
+      onComplete: function (id, name, response) {
+        if (response.success) {
+          var item = this.listElement.firstChild;
+          while (item){
+            if (item.qqFileId == id) break;
+            item = item.nextSibling;
+          }
+          if (item) {
+            $('.qq-upload-message', item).html('<a class="remove_attachment" href="' + response.delete_url + '">{% trans 'Delete' %}</a>');
+          }
+        }             
+      },
+      showMessage: function (message) {
+        $(document).baseOverlay({
+          data: message,
+          name: '{% trans "Error" %}'
+        }); 
+      }
+    });
+  
+    $('#add_cc').click(function(event) {
+      event.preventDefault();
+      $('.control-group-mail_cc').show();
+      $(this).hide();
+      return false;
+    });
+
+    $('#add_bcc').click(function(event) {
+      event.preventDefault();
+      $('.control-group-mail_bcc').show();
+      $(this).hide();
+      return false;
+    });
+
+    if ($('#send_mail').length == 0) {
+      $('.overlay_head').append(function() {
+          return '<a class="btn btn btn-success" id="send_mail" style="margin-right: 10px;"><i class="icon-share"></i>{% trans "Send mail" %}</a>';
+      });
+    }
+
+    $('.overlay_head').on('click', '#send_mail', function(event) {
+      event.preventDefault();
+      var form = $('#send_mail_form'), url = form.attr('action'),
+          div = form.parents(".overlay_content|first");
+      $.post(url, form.serialize(),
+        function(data) {
+          if (data.status == 'success') 
+            window.location = data.redirect;
+          else 
+            div.html(data.html);
+        }, 'json'
+      );
+      return false;        
+    });
+  });
+//]]></script>

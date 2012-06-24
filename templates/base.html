@@ -1,4 +1,4 @@
-{% load i18n %}{# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}<!DOCTYPE html>
+{% load i18n attachment_tags %}{# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}<!DOCTYPE html>
 <!--[if lt IE 7]><html xmlns="http://www.w3.org/1999/xhtml" class="no-js ie6 oldie" lang="en" xml:lang="en"><![endif]-->
 <!--[if IE 7]><html xmlns="http://www.w3.org/1999/xhtml" class="no-js ie7 oldie" lang="en" xml:lang="en"><![endif]-->
 <!--[if IE 8]><html xmlns="http://www.w3.org/1999/xhtml" class="no-js ie8 oldie" lang="en" xml:lang="en"><![endif]-->
@@ -12,18 +12,31 @@
   </head>
   <body>
     <!-- menu -->
-    {% if user.is_authenticated %}
-      {% include "menu.html" %}
-    {% endif %}
-
-    <!-- main content -->
-    {% block page_content %}
-      XXX
-    {% endblock page_content %}
+    <div id="page_content" >
+      {% if user.is_authenticated %}
+        {% include "menu.html" %}
+      {% endif %}
+      <!-- main content -->
+      {% block page_content %}
+        XXX
+      {% endblock page_content %}
+    </div> 
+    <div class="overlay" id="overlay_top_div">
+      <div class="overlay_inner">
+        <div class="overlay_head clearfix"> 
+          <h1 class="title"><div class="overlay_title"></div></h1>
+          <a class="btn overlay_close"><i class="icon-share"></i> {% trans "Close" %}</a>
+        </div>
+        <div class="overlay_content"></div>
+        <div class="overlay_bottom clearfix"> 
+        </div>
+      </div>
+    </div>
 
     <!-- Javascript -->
     <script src="{{ STATIC_URL}}js/jquery-1.7.2.min.js"></script>
     <script src="{{ STATIC_URL}}js/bootstrap-dropdown.js"></script>
+    <script src="{{ STATIC_URL}}js/jquery.epistola.js"></script>
     <script src="{{ STATIC_URL}}js/script.js"></script>
     {% block extra_js %}{% endblock extra_js %}
   </body>

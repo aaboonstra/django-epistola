@@ -11,7 +11,7 @@
       <a class="brand" href="javascript:;">Webmail - {{ user.get_full_name }}</a>
       <div class="nav-collapse">
         <ul class="nav">
-          <li><a href="{% url home %}">Webmail</a></li>
+          <li><a href="{% url webmail:webmail_view %}">Webmail</a></li>
           <li><a href="#">Contacts</a></li>
           <li><a href="#">Calendar</a></li>
           {% comment %}

@@ -1,0 +1,57 @@
+{# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="folders">
+  <div class="options">
+    <a class="btn btn-mini btn-primary" href="javascript:;"><i class="icon-wrench"></i> {% trans "Box options" %}</a>
+    <a class="btn btn-mini btn-primary compose" href="{% url webmail:webmail_compose %}" name="{% trans "Compose message" %}"><i class="icon-pencil"></i> {% trans "Compose" %}</a>
+    <div class="controls">
+      <a class="btn btn-mini" href="javascript:;"><i class="icon-plus"></i></a>
+      <a class="btn btn-mini" href="javascript:;"><i class="icon-plus"></i></a>
+      <a class="btn btn-mini" href="javascript:;"><i class="icon-plus"></i></a>
+    </div>
+  </div>
+</div>
+
+{% endblock page_content %}
+
+{% block extra_js %}
+<script type="text/javascript">//<![CDATA[
+  $(document).ready(function() {
+
+    /* generic overlay initiators */
+    function handleOverlayEventWithXhr(initiator) {
+      initiator.baseOverlay({
+        use_xhr: true,
+        url: initiator.attr("href"),
+        name: initiator.attr("name")
+      });
+    }
+
+    function handleOverlayEventWithData(initiator, data) {
+      initiator.baseOverlay({
+        data: data,
+        url: initiator.attr("href"),
+        name: initiator.attr("name")
+      });
+    }
+  
+    $('.compose').click(function(event) {
+      event.preventDefault();
+      handleOverlayEventWithXhr($(this));
+      return false;
+    });
+  });
+//]]></script>
+{% endblock extra_js %}

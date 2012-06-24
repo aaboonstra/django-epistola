@@ -64,7 +64,7 @@
         xhr.setRequestHeader('X-CSRFToken', '{{ request.META.CSRF_COOKIE }}');
       },
       onFormInit: function (form) {
-        form.appendChild("{% csrf_token %}");
+        $(form).append("{% csrf_token %}");
       },
       template: '<div style="display: none;" class="qq-upload-drop-area"></div>' + 
                 '<a class="qq-upload-button ui_button ui_button_light" ' +

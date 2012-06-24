@@ -5,11 +5,24 @@
 {% block page_content %}
 
 {% if messages %}
-<ul class="messages">
+<div class="messages">
+  <ul>
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+      {% if message.tags == 'success' %}
+        <i class="icon-ok-sign"/> 
+      {% elif message.tags == 'info' %}
+        <i class="icon-info-sign"/> 
+      {% elif message.tags == 'warning' %}
+        <i class="icon-warning-sign"/> 
+      {% elif message.tags == 'error' %}
+        <i class="icon-remove-sign"/> 
+      {% endif %}
+      {{ message }}
+      </li>
     {% endfor %}
-</ul>
+  </ul>
+</div>
 {% endif %}
 
 <div class="folders">
@@ -51,6 +64,17 @@
       event.preventDefault();
       handleOverlayEventWithXhr($(this));
       return false;
+    });
+
+
+    // success
+    $('.messages').find('li').each(function() {
+      $(this).delay(5000).fadeOut('slow', function() {
+        var ul = $(this).parent('ul');
+        $(this).remove();
+        if (ul.has('li').length == 0)
+          ul.parent('div').remove();
+      });
     });
   });
 //]]></script>

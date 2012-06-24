@@ -114,6 +114,46 @@
     }
 }
 
+/* Webmail template */
+.messages {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    margin-left: -100px;
+
+    ul {
+        list-style: none;
+    }
+    .rounded_bottom (@radius: 6px) {
+        -webkit-border-bottom-right-radius: @radius;
+        -webkit-border-bottom-left-radius: @radius;
+        -moz-border-radius-bottomright: @radius;
+        -moz-border-radius-bottomleft: @radius;
+        border-bottom-right-radius: @radius;
+        border-bottom-left-radius: @radius; 
+    }
+    li {
+        padding: 20px;
+        border: 1px solid #333 ;
+        .rounded_bottom;
+    } 
+    li.debug {
+        background-color: #414141;
+    }
+    li.info {
+        background-color: #99356B;
+    }
+    li.success {
+        background-color: #5BB75B;
+    }
+    li.warning {
+        background-color: #F3C768;
+    }
+    li.error {
+        background-color: #DA4F49;
+    }
+}
+
 /* Mail Folders */
 
 .folders {

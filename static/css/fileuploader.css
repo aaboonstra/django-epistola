@@ -1,0 +1,76 @@
+/*
+.qq-uploader { position:relative; width: 100%;}
+
+.qq-upload-button {
+    display:block;
+    width: 105px; padding: 7px 0; text-align:center;    
+    background:#880000; border-bottom:1px solid #ddd;color:#fff;
+}
+.qq-upload-button-hover {background:#cc0000;}
+.qq-upload-button-focus {outline:1px dotted black;}
+
+.qq-upload-drop-area, .qq-upload-extra-drop-area {
+    position:absolute; top:0; left:0; width:100%; height:100%; min-height: 70px; z-index:2;
+    background:#FF9797; text-align:center; 
+}
+.qq-upload-drop-area span {
+    display:block; position:absolute; top: 50%; width:100%; margin-top:-8px; font-size:16px;
+}
+.qq-upload-extra-drop-area { position: relative; margin-top: 50px; font-size: 16px; padding-top: 30px; height: 20px; min-height: 40px; }
+.qq-upload-drop-area-active {background:#FF7171;}
+*/
+.qq-upload-drop-area { display:none !important; }
+
+.qq-upload-button {}
+.qq-upload-button-hover .qq-upload-button { background:#f2f8fC; color:#434343; }
+.qq-upload-button-focus { outline:1px dotted black; }
+
+.qq-upload-list {
+    margin:0;
+    margin-bottom:-1px;
+    padding:0;
+    list-style:none;
+    font-size:.9em;
+    color:#808080;
+}
+
+.qq-upload-list li {
+    margin:2px;
+    padding:2px 0 2px 24px;
+    border-bottom:1px solid #e6e6e6;
+    background:#f2f8fC url('../img/type_default.gif') no-repeat 3px center;
+}
+
+.qq-upload-list li.file-type-image { background-image:url('../img/type_image.gif'); }
+.qq-upload-list li.file-type-sound { background-image:url('../img/type_sound.gif'); }
+.qq-upload-list li.file-type-video { background-image:url('../img/type_video.gif'); }
+.qq-upload-list li.file-type-text { background-image:url('../img/type_text.gif'); }
+.qq-upload-list li.file-type-pdf { background-image:url('../img/type_pdf.gif'); }
+
+.qq-upload-list li .qq-upload-file,
+.qq-upload-list li .qq-upload-spinner,
+.qq-upload-list li .qq-upload-size,
+.qq-upload-list li .qq-upload-cancel,
+.qq-upload-list li .qq-upload-message {
+    display:inline-block;
+    margin-right:7px;
+    vertical-align:middle;
+}
+
+.qq-upload-list li .qq-upload-spinner { width:15px; height:15px; background:url('../img/loading.gif'); vertical-align:text-bottom; }
+
+.qq-upload-list li .qq-upload-message { display:block; float:right; }
+
+.qq-upload-list li .qq-upload-options { display:block; float:right; }
+.qq-upload-list li .qq-upload-options a { display:inline-block; width:16px; height:16px; background:no-repeat right top; }
+.qq-upload-list li .qq-upload-options a.qq-upload-cancel { background-image:url('../img/icon_delete.png'); }
+.qq-upload-list li .qq-upload-options a.qq-upload-delete { background-image:url('../img/icon_delete.png'); }
+
+.qq-upload-list li.qq-upload-success {}
+.qq-upload-list li.qq-upload-success .qq-upload-file {
+    color:#434343;
+}
+.qq-upload-list li.qq-upload-fail {
+    background-image:url('../img/type_denied.gif');
+    background-color:#ffe6e6;
+}

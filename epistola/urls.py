@@ -2,10 +2,9 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
+from django.views.generic.simple import redirect_to
 admin.autodiscover()
 
-from epistola.views import HomeView
 
 urlpatterns = patterns('',
     
@@ -14,8 +13,11 @@ urlpatterns = patterns('',
     url(r'^account/login/', 'django.contrib.auth.views.login', name='login'),
     url(r'^account/logout/','django.contrib.auth.views.logout_then_login' , name='logout'),
 
+    (r'^$', redirect_to, {'url': '/webmail/'}),
+
     # Webmail contents
-    url(r'^$', login_required(HomeView.as_view()), name='home'),
+    (r'^webmail/', include('epistola.webmail.urls', namespace='webmail')),
+    (r'^attachment/', include('epistola.attachment.urls', namespace='attachment')),
 )
 
 if settings.DEBUG:

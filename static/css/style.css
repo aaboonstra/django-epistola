@@ -1,0 +1,115 @@
+#page_content {
+  position: relative;
+  width: 100%;
+}
+/* Generic overlay */
+.overlay {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+  background-image: url('../img/overlay-dark.png');
+}
+.overlay .overlay_bottom {
+  position: relative;
+  padding: 10px 15px;
+  background: #f9f9f9;
+  border-top: 1px solid #e0e0e0;
+}
+.overlay .overlay_bottom .title {
+  float: left;
+  margin: 4px 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1;
+}
+.overlay .overlay_bottom a {
+  float: right;
+}
+.overlay .overlay_head {
+  position: relative;
+  padding: 10px 15px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+}
+.overlay .overlay_head .title {
+  float: left;
+  margin: 4px 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1;
+}
+.overlay .overlay_head a {
+  float: right;
+}
+.overlay_inner {
+  position: relative;
+  width: 960px;
+  min-height: 100px;
+  margin: 20px auto;
+  background: #fff;
+  border: 5px solid #D44413;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -moz-box-shadow: 0px 0px 15px #777;
+  -webkit-box-shadow: 0px 0px 15px #777;
+  box-shadow: 0px 0px 15px #777;
+}
+.overlay_content {
+  background: #f2f8fc;
+}
+/* Compose mail overlay */
+.mail-container {
+  border: 1px #C49889 solid;
+  margin: 10px;
+  padding: 10px;
+}
+.mail-container input[type="text"] {
+  width: 95%;
+}
+.mail-container .control-group-mail_cc {
+  display: none;
+}
+.mail-container .control-group-mail_bcc {
+  display: none;
+}
+.mail-container #add_cc {
+  margin-right: 10px;
+}
+.message-container {
+  border: 1px #C49889 solid;
+  margin: 10px;
+  padding: 10px;
+}
+.message-container textarea {
+  width: 99%;
+  max-width: 99%;
+  height: 500px;
+  border: 0px solid;
+  outline: none;
+}
+/* Mail Folders */
+.folders {
+  margin-left: 20px;
+  width: 220px;
+}
+.folders .options a {
+  height: 20px;
+}
+.folders .options a.compose {
+  width: 100px;
+}
+.folders .controls {
+  display: none;
+  border-bottom: 1px dotted;
+}

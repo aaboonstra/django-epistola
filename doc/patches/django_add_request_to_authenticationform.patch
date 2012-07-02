@@ -1,0 +1,12 @@
+--- django/contrib/auth/views.py.old    2012-06-24 14:48:40.138395560 +0200
++++ django/contrib/auth/views.py    2012-06-24 14:47:08.114397074 +0200
+@@ -32,7 +32,7 @@
+     redirect_to = request.REQUEST.get(redirect_field_name, '')
+ 
+     if request.method == "POST":
+-        form = authentication_form(data=request.POST)
++        form = authentication_form(data=request.POST, request=request)
+         if form.is_valid():
+             netloc = urlparse.urlparse(redirect_to)[1]
+ 
+

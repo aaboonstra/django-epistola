@@ -148,3 +148,9 @@
   display: none;
   border-bottom: 1px dotted;
 }
+.folders .mailbox-container {
+  margin-top: 30px;
+}
+.folders .mailbox-container ul {
+  list-style: none;
+}

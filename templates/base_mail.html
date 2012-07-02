@@ -1,6 +1,6 @@
 {# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n webmail_tags %}
 
 {% block page_content %}
 
@@ -10,13 +10,13 @@
     {% for message in messages %}
       <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
       {% if message.tags == 'success' %}
-        <i class="icon-ok-sign"/> 
-      {% elif message.tags == 'info' %}
-        <i class="icon-info-sign"/> 
+        <i class="icon-ok-sign"/>
+    {% elif message.tags == 'info' %}
+        <i class="icon-info-sign"/>
       {% elif message.tags == 'warning' %}
-        <i class="icon-warning-sign"/> 
+        <i class="icon-warning-sign"/>
       {% elif message.tags == 'error' %}
-        <i class="icon-remove-sign"/> 
+        <i class="icon-remove-sign"/>
       {% endif %}
       {{ message }}
       </li>
@@ -35,6 +35,12 @@
       <a class="btn btn-mini" href="javascript:;"><i class="icon-plus"></i></a>
     </div>
   </div>
+
+  <div class="mailbox-container">
+    {% parse_folders folders %}
+  </div>
+
+
 </div>
 
 {% endblock page_content %}

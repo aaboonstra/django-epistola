@@ -4,13 +4,13 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic.simple import redirect_to
 admin.autodiscover()
-
+from epistola.forms import EpistolaAuthenticationForm
 
 urlpatterns = patterns('',
     
     # Management
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^account/login/', 'django.contrib.auth.views.login', name='login'),
+    url(r'^account/login/', 'django.contrib.auth.views.login', {'template_name': 'registration/login.html', 'authentication_form': EpistolaAuthenticationForm}, name='login'),
     url(r'^account/logout/','django.contrib.auth.views.logout_then_login' , name='logout'),
 
     (r'^$', redirect_to, {'url': '/webmail/'}),

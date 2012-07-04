@@ -1,4 +1,4 @@
-# vim: set ts=8 sw=4 sts=4 et ai:
+# vim: set ts=4 sw=4 sts=4 et ai:
 import mimetypes
 from urllib import unquote
 
@@ -15,14 +15,17 @@ class AjaxUploadHandlerMixin(object):
     Ajax upload handler mixin which creates the FILES structure with a
     single file ``file`` which is created from the complete POST request body.
 
-    It can be combined with MemoryFileUploadHandler and TemporaryFileUploadHandler.
+    It can be combined with MemoryFileUploadHandler and
+    TemporaryFileUploadHandler.
     '''
     def __init__(self, *args, **kwargs):
         self.field_name = kwargs.pop('field_name', 'f')
         super(AjaxUploadHandlerMixin, self).__init__(*args, **kwargs)
 
-    def handle_raw_input(self, input_data, META, content_length, boundary, encoding=None):
-        super(AjaxUploadHandlerMixin, self).handle_raw_input(input_data, META, content_length, boundary, encoding)
+    def handle_raw_input(self, input_data, META, content_length, boundary,
+            encoding=None):
+        super(AjaxUploadHandlerMixin, self).handle_raw_input(input_data, META,
+                content_length, boundary, encoding)
         if META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest':
             return # request is not an ajax request
         if not getattr(self, 'activated', True):
@@ -45,7 +48,8 @@ class AjaxUploadHandlerMixin(object):
 
         chunk_start = 0
         try:
-            self.new_file(self.field_name, file_name, content_type, content_length, encoding)
+            self.new_file(self.field_name, file_name, content_type,
+                    content_length, encoding)
         except StopFutureHandlers:
             pass # expected from MemoryFileUploadHandler
 
@@ -57,7 +61,8 @@ class AjaxUploadHandlerMixin(object):
         file_obj = self.file_complete(chunk_start)
 
         # create the POST and FILES datastructures
-        post, files = QueryDict(MultiValueDict(), encoding=encoding), MultiValueDict()
+        post = QueryDict(MultiValueDict(), encoding=encoding)
+        files = MultiValueDict()
         if file_obj:
             files.appendlist(self.field_name, file_obj)
         return post, files
@@ -66,8 +71,10 @@ class AjaxUploadHandlerMixin(object):
         '''Cleanup filename from Internet Explorer full paths.'''
         return filename and filename[filename.rfind('\\')+1:].strip()
 
-class AjaxTemporaryFileUploadHandler(AjaxUploadHandlerMixin, TemporaryFileUploadHandler):
+class AjaxTemporaryFileUploadHandler(AjaxUploadHandlerMixin,
+        TemporaryFileUploadHandler):
     pass
 
-class AjaxMemoryFileUploadHandler(AjaxUploadHandlerMixin, MemoryFileUploadHandler):
+class AjaxMemoryFileUploadHandler(AjaxUploadHandlerMixin,
+        MemoryFileUploadHandler):
     pass

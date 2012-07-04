@@ -3,8 +3,8 @@ from os import path
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from epistola.models import AbstractModel as Model 
 
 
@@ -13,7 +13,8 @@ def get_attachment_media_path(instance, filename):
 
 class Attachment(Model):
     user = models.ForeignKey(User)
-    content_type = models.ForeignKey(ContentType, verbose_name=_('content type'))
+    content_type = models.ForeignKey(ContentType,
+            verbose_name=_('content type'))
     object_id = models.CharField(_('object id'), db_index=True, max_length=24)
     object = generic.GenericForeignKey('content_type', 'object_id')
 

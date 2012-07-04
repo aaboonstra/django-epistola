@@ -1,7 +1,7 @@
 # vim: set syn=python ts=4 sw=4 sts=4 et ai:
 from django import template
-     
 register = template.Library()
+
 
 class ParseFoldersNode(template.Node):
     def __init__(self, folders):
@@ -32,13 +32,13 @@ class ParseFoldersNode(template.Node):
         return ParseFoldersNode.html
 
 
-
 @register.tag
 def parse_folders(parser, token):
 
     bits = list(token.split_contents())
     if not 1 < len(bits) < 3:
-       raise template.TemplateSyntaxError("%r tag requires folders argument" % bits[0]) 
+       raise template.TemplateSyntaxError("%r tag requires ' \
+               'folders argument" % bits[0]) 
 
     return ParseFoldersNode(*bits[1:])
 

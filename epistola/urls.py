@@ -10,14 +10,18 @@ urlpatterns = patterns('',
     
     # Management
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^account/login/', 'django.contrib.auth.views.login', {'template_name': 'registration/login.html', 'authentication_form': EpistolaAuthenticationForm}, name='login'),
-    url(r'^account/logout/','django.contrib.auth.views.logout_then_login' , name='logout'),
+    url(r'^account/login/', 'django.contrib.auth.views.login',{
+        'template_name': 'registration/login.html',
+        'authentication_form': EpistolaAuthenticationForm}, name='login'),
+    url(r'^account/logout/','django.contrib.auth.views.logout_then_login',
+        name='logout'),
 
     (r'^$', redirect_to, {'url': '/webmail/'}),
 
     # Webmail contents
     (r'^webmail/', include('epistola.webmail.urls', namespace='webmail')),
-    (r'^attachment/', include('epistola.attachment.urls', namespace='attachment')),
+    (r'^attachment/', include('epistola.attachment.urls',
+        namespace='attachment')),
 )
 
 if settings.DEBUG:

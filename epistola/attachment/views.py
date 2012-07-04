@@ -1,4 +1,4 @@
-# vim: set ts=8 sw=4 sts=4 et ai:
+# vim: set ts=4 sw=4 sts=4 et ai:
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import FormView

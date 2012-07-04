@@ -1,3 +1,4 @@
+# vim: set syn=python ts=4 sw=4 sts=4 et ai:
 import mimetypes
 from django import forms
 from django.conf import settings
@@ -27,15 +28,20 @@ class CreateAttachmentForm(forms.ModelForm):
         file = self.cleaned_data.get('f')
         # content_type is set by the upload handler based on file extension
         content_type = file.content_type
+        if not content_type:
+            raise forms.ValidationError(_('Cannot determine the content type ' \
+                'of the given file: %s.') % file.name)
         for mime_type in ALLOWED_MIMETYPES:
             if content_type.startswith(mime_type.replace('*', '')):
                 break
         else:
-            raise forms.ValidationError(_('It is not allowed to upload "%s" files.') % file.name)
+            raise forms.ValidationError(_('It is not allowed to' \
+                'upload "%s" files.') % file.name)
 
         for mime_type in BLOCKED_MIMETYPES:
             if content_type.startswith(mime_type):
-                raise forms.ValidationError(_('It is not allowed to upload "%s" files.') % file.name)
+                raise forms.ValidationError(_('It is not allowed to' \
+                        'upload "%s" files.') % file.name)
         return self.cleaned_data
 
     def save(self, commit=True):
@@ -43,7 +49,8 @@ class CreateAttachmentForm(forms.ModelForm):
         object = super(CreateAttachmentForm, self).save(commit=False)
         object.user = self.user
         content_type = file.content_type
-        # This if statement might look strange but it will make sence in the future
+        # This if statement might look strange but it will
+        # make sence in the future
         if content_type is None:
             object.object = self.create_document(file)
         else:
@@ -64,4 +71,5 @@ class CreateAttachmentForm(forms.ModelForm):
         if filetype == 'vnd.openxmlformats-officedocument.presentationml.presentation':
             filetype == 'pptx'
 
-        return DocumentType.objects.create(document=file, user=self.user, filetype=filetype)
+        return DocumentType.objects.create(document=file, user=self.user,
+                filetype=filetype)

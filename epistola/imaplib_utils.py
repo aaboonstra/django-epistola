@@ -1,3 +1,4 @@
+# vim: set ts=4 sw=4 sts=4 et ai:
 import imaplib
 import re
 from collections import OrderedDict
@@ -24,6 +25,13 @@ def open_connection(request):
 
 
 class BoxObject(object):
+    '''
+    A class that represents a mailbox.
+    @param parent: the parent of a subfolder or None
+    @param lookup_name: the imap given name to directly fetch the mailbox from 
+                        the imap server
+    @param name: the name of the mailbox used in the template
+    '''
     parent = None
     lookup_name = None
     def __init__(self, name=None):
@@ -110,7 +118,7 @@ def parse_list(data):
 
     tree = OrderedDict() 
     for line in reversed(data):
-        flags, delimiter, mailbox_name = list_response_pattern.match(line).groups() 
-        nodes = [BoxObject(name=n.strip('"')) for n in mailbox_name.split('.')]
-        parser(tree, nodes, mailbox_name)
+        flags, delimiter, mbox_name = list_response_pattern.match(line).groups() 
+        nodes = [BoxObject(name=n.strip('"')) for n in mbox_name.split('.')]
+        parser(tree, nodes, mbox_name)
     return tree

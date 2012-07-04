@@ -11,7 +11,8 @@ class ImapAuthenticationBackend(object):
     def authenticate(self, username=None, password=None):
         try:
             # Check if this user is valid on the mail server
-            c = IMAPClient(settings.MAIL_SERVER, use_uid=True, ssl=settings.USE_SSL)
+            c = IMAPClient(settings.MAIL_SERVER, use_uid=True,
+                    ssl=settings.USE_SSL)
             c.login(username, password)
             c.logout()
         except:
@@ -22,7 +23,8 @@ class ImapAuthenticationBackend(object):
             user = User.objects.get(email=username)
         except User.DoesNotExist:
             # Create a user in Django's local database
-            user = User.objects.create_user(username, email=username, password=password)
+            user = User.objects.create_user(username, email=username,
+                    password=password)
 
         return user
 

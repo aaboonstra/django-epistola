@@ -1,6 +1,7 @@
+# vim: set ts=4 sw=4 sts=4 et ai:
 from functools import wraps
-
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.http import HttpResponse, HttpResponseRedirect, \
+    HttpResponsePermanentRedirect
 from django.utils import simplejson
 from django.utils.decorators import method_decorator
 
@@ -17,7 +18,8 @@ def json_response(func):
         if isinstance(response, HttpResponse):
             json_response.cookies = response.cookies
             json_response.status_code = response.status_code
-            if isinstance(response, (HttpResponseRedirect, HttpResponsePermanentRedirect)):
+            if isinstance(response, (HttpResponseRedirect,
+                HttpResponsePermanentRedirect)):
                 json = {'redirect': response['Location']}
             else:
                 json = {'html': response.content}

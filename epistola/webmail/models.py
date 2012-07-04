@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+# vim: set syn=python ts=4 sw=4 sts=4 et ai:

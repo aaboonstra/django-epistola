@@ -1,3 +1,6 @@
+html {
+  overflow-y: scroll;
+}
 #page_content {
   position: relative;
   width: 100%;
@@ -135,11 +138,14 @@
 }
 /* Mail Folders */
 .folders {
+  float: left;
   margin-left: 20px;
   width: 220px;
 }
 .folders .options a {
-  height: 20px;
+  height: 24px;
+  line-height: 20px;
+  font-size: 14px;
 }
 .folders .options a.compose {
   width: 100px;
@@ -153,4 +159,28 @@
 }
 .folders .mailbox-container ul {
   list-style: none;
+}
+.folders .mailbox-container a {
+  display: block;
+  width: 100%;
+}
+.folders .mailbox-container a.active {
+  font-weight: bold;
+  border-right: 2px solid;
+}
+/* Mail listing */
+#listing {
+  margin-left: 260px;
+  margin-top: 70px;
+  width: 80%;
+  height: 80%;
+}
+#listing table tr {
+  cursor: pointer;
+}
+#listing table thead th.mail-from {
+  width: 200px;
+}
+#listing table thead th.mail-received {
+  width: 100px;
 }

@@ -1,0 +1,42 @@
+{# vim: set ts=2 sw=2 sts=2 et ai syn=htmldjango: #}
+{% load i18n %}
+{% if is_paginated %}
+  <div class="pagination">
+    <span class="page-links">
+      {% if page_obj.has_previous %}
+      <a class="paginate" href="{% url webmail:mailbox_view %}&#63;mailbox={{ current_mailbox }}&#38;page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
+      {% endif %}
+      <span class="page-current">
+        {% blocktrans with page_obj.number as number and page_obj.paginator.num_pages as m_number %}
+        Page {{ number }} of {{ m_number }}.
+        {% endblocktrans %}
+        {% blocktrans with msg_first as first and msg_last as last and msg_total as total %}
+        <strong>{{ first }}</strong> - <strong>{{ last }}</strong> of <strong>{{ total }}</strong>.
+        {% endblocktrans %}
+      </span>
+      {% if page_obj.has_next %}
+      <a class="paginate" href="{% url webmail:mailbox_view %}&#63;mailbox={{ current_mailbox }}&#38;page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
+      {% endif %}
+    </span>
+  </div>
+{% endif %} 
+{% if not object_list %}
+  {% trans "Mailbox is empty" %}
+{% else %}
+  <table class="table table-striped">
+    <thead>
+      <th class="mail-from">From</th>
+      <th class="mail-subject">Subject</th>
+      <th class="mail-received">Received</th>
+    </thead>
+    <tbody>
+      {% for x in object_list reversed %}
+      <tr>
+        <td>{{ x.From }}</td>
+        <td>{{ x.Subject }}</td>
+        <td>{{ x.Date }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

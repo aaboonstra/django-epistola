@@ -12,17 +12,17 @@ from django.conf import settings
 
 list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<name>.*)')
 
-def open_connection(request):
+def open_imap_connection(request, verbose=False):
+
+    username = request.user.username
+    password = request.session['_auth_user_password']
     host = settings.MAIL_SERVER
+
     # Connect to the server
     connection = imaplib.IMAP4_SSL(host)
-
     # Login to our acount
-    username = request.user.username
-    password = request.session['password'] #XXX not save at all
     connection.login(username, password)
     return connection
-
 
 class BoxObject(object):
     '''

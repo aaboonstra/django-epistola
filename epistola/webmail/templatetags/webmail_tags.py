@@ -18,12 +18,16 @@ class ParseFoldersNode(template.Node):
             ParseFoldersNode.html += '<ul>' 
             for k,v in folders.iteritems():
                 if isinstance(v, dict) and v:
-                    ParseFoldersNode.html += '<li><a data-lookup_name="%s" ' \
-                        'href="javascript:;">%s</a></li>' % (k.lookup_name,
+                    ParseFoldersNode.html += '<li class="contains_sublist">' \
+                        '<a data-lookup_name="%s" ' \
+                        ' class="multi_node" ' \
+                        'href="javascript:;">%s</a>' % (k.lookup_name,
                         k.name)
                     parse(v)
+                    ParseFoldersNode.html+='</li>'
                 else:
-                    ParseFoldersNode.html += '<li><a data-lookup_name="%s" ' \
+                    ParseFoldersNode.html += '<li><a class="single_node" ' \
+                        'data-lookup_name="%s" ' \
                         'href="javascript:;">%s</a></li>' % (k.lookup_name,
                         k.name)
             ParseFoldersNode.html += '</ul>'

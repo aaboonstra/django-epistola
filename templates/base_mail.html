@@ -27,8 +27,7 @@
 
 <div class="folders">
   <div class="options">
-    <a class="btn btn-mini btn-primary" href="javascript:;"><i class="icon-wrench"></i> {% trans "Box options" %}</a>
-    <a class="btn btn-mini btn-primary compose" href="{% url webmail:webmail_compose %}" name="{% trans "Compose message" %}"><i class="icon-pencil"></i> {% trans "Compose" %}</a>
+    <a class="btn btn-mini btn-primary compose" href="{% url webmail:webmail_compose %}" name="{% trans "Compose message" %}">{% trans "Compose" %}</a>
     <div class="controls">
       <a class="btn btn-mini" href="javascript:;"><i class="icon-plus"></i></a>
       <a class="btn btn-mini" href="javascript:;"><i class="icon-plus"></i></a>
@@ -39,9 +38,10 @@
   <div class="mailbox-container">
     {% parse_folders folders %}
   </div>
-
-
 </div>
+<div id="listing">
+</div>
+
 
 {% endblock page_content %}
 
@@ -72,6 +72,30 @@
       return false;
     });
 
+    $('.mailbox-container a').click(function(event) {
+      event.preventDefault();
+      $('.mailbox-container a').each(function() {
+        $(this).removeClass('active');
+      });
+      $(this).addClass('active');
+    
+      var div = $('#listing');
+      var lookup_name = $(this).data('lookup_name');
+      $.get('/webmail/mailbox/', {mailbox:lookup_name}, function(data) {
+        div.html(data.html);
+      });
+      return false;
+    });
+
+    $('#listing').on('click', '.paginate', function(event) {
+      event.preventDefault();
+      var div = $('#listing');
+      var url = $(this).attr('href');
+      $.get(url, function(data) {
+        div.html(data.html);
+      });
+      return false;
+    });
 
     // success
     $('.messages').find('li').each(function() {
@@ -81,6 +105,10 @@
         if (ul.has('li').length == 0)
           ul.parent('div').remove();
       });
+    });
+
+    $('tr').click(function(event) {
+      handleOverlayEventWithData($(this));
     });
   });
 //]]></script>

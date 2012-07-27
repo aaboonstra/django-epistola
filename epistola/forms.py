@@ -6,7 +6,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 
-
 class EpistolaAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(EpistolaAuthenticationForm, self).__init__(*args, **kwargs)
@@ -51,7 +50,7 @@ class EpistolaAuthenticationForm(AuthenticationForm):
                 cache.delete(key)
             # Attach the given password to the session so we can reuse it to
             # authenticate with the imap server.
-            self.request.session['password'] = password
+            self.request.session['_auth_user_password'] = password
 
         self.check_for_test_cookie()
         return self.cleaned_data

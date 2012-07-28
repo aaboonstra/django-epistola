@@ -31,11 +31,11 @@
     </thead>
     <tbody>
       {% for x in object_list reversed %}
-      <tr>
-        <td>{{ x.From }}</td>
-        <td>{{ x.Subject }}</td>
-        <td>{{ x.Date }}</td>
-      </tr>
+        <tr class="{% for flag in x.flags %}{{ flag|lower }} {% endfor %}">
+          <td>{{ x.msg.From }}</td>
+          <td>{{ x.msg.Subject }}</td>
+          <td>{{ x.msg.Date }}</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>

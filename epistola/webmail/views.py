@@ -1,12 +1,13 @@
 # vim: set syn=python ts=4 sw=4 sts=4 et ai:
 import email
+import re
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import TemplateView, FormView, ListView 
+from django.views.generic import TemplateView, FormView, ListView
 from epistola.decorators import json_response 
 from epistola.webmail.forms import SendMailForm
 from epistola.imaplib_utils import open_imap_connection, parse_list
@@ -25,6 +26,22 @@ class MailView(TemplateView):
             'folders': tree,
         })
         return context
+
+
+class Message(object):
+    '''
+    Class to hold a message with its flags (seen, answered etc) so we
+    can use it in the template. 
+    @param msg: holds the generated email msg
+    @param flags: holds the flags fetched from the mailserver for
+                  one email.
+    '''
+    msg = None
+    flags = None
+
+    def __init__(self, msg=None, flags=None):
+        self.msg=msg
+        self.flags=flags
 
 
 class MailboxView(ListView):
@@ -68,7 +85,20 @@ class MailboxView(ListView):
                     '(BODY.PEEK[HEADER] FLAGS)')
             for response_part in msg_data:
                 if isinstance(response_part, tuple):
-                    data.append(email.message_from_string(response_part[1]))
+                    msg = email.message_from_string(response_part[1]) 
+                    flags = None
+
+                    # Grab the raw flags from the response_part
+                    flags = re.search(r'\(FLAGS\ \((.*?)\)',
+                            response_part[0]).group(1)
+                    # If we have a raw match (includes \\ and $) we
+                    # will continue parsing it into a usable list of
+                    # flags so we can use it in the template as css class.
+                    if flags:
+                        flags = re.findall(r'\w+', flags)
+
+                    message = Message(msg=msg, flags=flags)
+                    data.append(message)
             context.update({
                 'msg_total': msg_total[0],
                 'msg_first': msg_ids_list[-1],

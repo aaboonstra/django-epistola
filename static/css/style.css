@@ -184,3 +184,9 @@ html {
 #listing table thead th.mail-received {
   width: 100px;
 }
+#listing table tbody tr {
+  font-weight: bold;
+}
+#listing table tbody tr.seen {
+  font-weight: normal;
+}
